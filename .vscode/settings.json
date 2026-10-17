@@ -1,0 +1,11 @@
+{
+    "python.analysis.autoImportCompletions": true,
+    "python-envs.pythonProjects": [],
+    "editor.formatOnSave": true, // Automatically formats code using your default formatter on save
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit" // Cleans up, sorts, and removes unused imports on save
+    },
+    "files.autoSave": "onFocusChange", // Saves files automatically when you click away from the window
+    "files.trimTrailingWhitespace": true, // Removes invisible trailing spaces at the end of lines
+    "files.trimFinalNewlines": true // Keeps your file clean by stripping extra blank lines at the en
+}
