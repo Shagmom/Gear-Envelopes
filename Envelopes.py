@@ -19,20 +19,20 @@ class InvoluteCutter:
         base_radius = self.base_diameter / 2
 
         x0 = u
-        y0 = base_radius*np.cos(v+s) + base_radius*v*np.sin(v+s)
-        z0 = base_radius*np.sin(v+s) - base_radius*v*np.cos(v+s)
+        y0 = base_radius*np.cos(v) + base_radius*v*np.sin(v)        # add shift coefficient to all trignomentric arguments
+        z0 = base_radius*np.sin(v) - base_radius*v*np.cos(v)
 
     def addendum(self,u,v):
 
         tip_radius = self.tip_diameter / 2
 
         x0 = u
-        y0 = tip_radius*np.cos(v+s)
-        z0 = tip_radius*np.sin(v+s)
+        y0 = tip_radius*np.cos(v)
+        z0 = tip_radius*np.sin(v)
 
 
 class Transform:
-    def __init__(self,input_vector:np.ndarray) -> None:
+    def __init__(self,input_vector:np.ndarray):
         self.input_vector = input_vector
         pass
 
@@ -42,8 +42,7 @@ class Transform:
             [0, np.cos(angle), -np.sin(angle)],
             [0, np.sin(angle),  np.cos(angle)]
             ])
-
-        return(R_x @ self.input_vector)
+        return Transform(R_x @ self.input_vector)
 
     def rotate_y(self,angle:float):
         R_y = np.array([
@@ -51,8 +50,7 @@ class Transform:
             [0, 1, 0],
             [-np.sin(angle), 0, np.cos(angle)]
             ])
-
-        return(R_y @ self.input_vector)
+        return Transform(R_y @ self.input_vector)
 
     def rotate_z(self,angle:float):
         R_z = np.array([
@@ -60,12 +58,15 @@ class Transform:
             [np.sin(angle),  np.cos(angle), 0],
             [0, 0, 1]
             ])
+        return Transform(R_z @ self.input_vector)
 
-        return(R_z @ self.input_vector)
+    def translate(self, translation_vector):
+        return Transform(self.input_vector+translation_vector)
 
-    def translate(self,translation_vector:np.ndarray):
+    def output(self):
+        return self.input_vector
 
-        return(self.input_vector + translation_vector)
+
 
 
 if __name__ == "__main__":
